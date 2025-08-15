@@ -1,0 +1,53 @@
+# .github/workflows/monitor-workhours.yml
+name: Monitor during work hours
+
+on:
+  schedule:
+    # Weekdays at 08:00 and 13:00 UTC == 09:00 and 14:00 Lisbon (DST)
+    - cron: "0 8 * * 1-5"
+    - cron: "0 13 * * 1-5"
+  workflow_dispatch:
+
+concurrency:
+  group: monitor-workhours
+  cancel-in-progress: true
+
+jobs:
+  run-monitor:
+    runs-on: ubuntu-latest
+    # Keep below your org's job max. 300 = 5h, 270 = 4.5h, etc.
+    timeout-minutes: 300
+
+    env:
+      PYTHON_VERSION: "3.11"
+      RUN_FOR_MINUTES: "270"   # adjust to 240..300 as you prefer
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install deps
+        run: |
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+
+      # Run your script with secrets injected as environment variables
+      - name: Run monitor with secrets
+        env:
+          AZURE_PAT: ${{ secrets.AZURE_PAT }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        run: |
+          set -e
+          echo "Starting monitor for $RUN_FOR_MINUTES minutes..."
+          timeout "${RUN_FOR_MINUTES}m" python botSlack/bot_slack.py || code=$?
+          if [ "${code:-0}" = "124" ]; then
+            echo "Time window reached; stopping gracefully."
+            exit 0
+          fi
+          exit "${code:-0}"
