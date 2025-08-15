@@ -45,7 +45,7 @@ jobs:
         run: |
           set -e
           echo "Starting monitor for $RUN_FOR_MINUTES minutes..."
-          timeout "${RUN_FOR_MINUTES}m" python botSlack/bot_slack.py || code=$?
+          timeout "${RUN_FOR_MINUTES}m" python botSlack/bot-get-tickets-qa.py || code=$?
           if [ "${code:-0}" = "124" ]; then
             echo "Time window reached; stopping gracefully."
             exit 0
