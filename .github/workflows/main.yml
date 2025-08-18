@@ -15,6 +15,7 @@ concurrency:
 jobs:
   run-monitor:
     runs-on: ubuntu-latest
+    environment: slack_bot   # <- must match the environment that holds the secrets
     # Keep below your org's job max. 300 = 5h, 270 = 4.5h, etc.
     timeout-minutes: 300
 
@@ -26,10 +27,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Debug Show current dir and files
-        run: |
-          pwd
-          ls -alR
+      # - name: Debug Show current dir and files
+      #   run: |
+      #     pwd
+      #     ls -alR
 
       - name: Setup Python
         uses: actions/setup-python@v5
