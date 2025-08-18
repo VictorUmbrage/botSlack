@@ -42,6 +42,11 @@ jobs:
             pip install -r requirements.txt
           fi
 
+      - name: Ensure secrets are present (fail fast)
+        run: |
+          [ -n "${AZURE_PAT}" ] || { echo "Missing AZURE_PAT"; exit 1; }
+          [ -n "${SLACK_WEBHOOK}" ] || { echo "Missing SLACK_WEBHOOK"; exit 1; }
+
       # Run your script with secrets injected as environment variables
       - name: Run monitor with secrets
         env:
