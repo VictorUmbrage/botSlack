@@ -14,7 +14,7 @@ seen_ids = set()
 # ── HELPERS ──────────────────────────────────────────────────────────────
 def azure_get(path, params=None):
     url = f"https://dev.azure.com/{AZURE_ORG}/{AZURE_PROJ}/_apis/{path}"
-    temp = requests.get(url, auth=('', PAT), params=params)
+    response = requests.get(url, auth=('', PAT), params=params)
     print('Debugging')
     print('response.status_code')   # 203
     print(response.status_code)   # 203
