@@ -14,19 +14,7 @@ seen_ids = set()
 # ── HELPERS ──────────────────────────────────────────────────────────────
 def azure_get(path, params=None):
     url = f"https://dev.azure.com/{AZURE_ORG}/{AZURE_PROJ}/_apis/{path}"
-    response = requests.get(url, auth=('', PAT), params=params)
-    print('Debugging')
-    print('response.status_code')   # 203
-    print(response.status_code)   # 203
-    print('response.text')          # Raw response body as text
-    print(response.text)          # Raw response body as text
-    print('response.json()')        # If it’s JSON data
-    print(response.json())        # If it’s JSON data
-    print('response.headers')       # Response headers
-    print(response.headers)       # Response headers
-    print('temp')
-    print(temp)
-    return temp.json()
+    return requests.get(url, auth=('', PAT), params=params).json()
 
 def find_column_id(board_id, column_name):
     cols = azure_get(f"work/boards/{board_id}/columns", {"api-version":"6.0-preview.1"})["value"]
