@@ -14,7 +14,9 @@ seen_ids = set()
 # ── HELPERS ──────────────────────────────────────────────────────────────
 def azure_get(path, params=None):
     url = f"https://dev.azure.com/{AZURE_ORG}/{AZURE_PROJ}/_apis/{path}"
-    return requests.get(url, auth=('', PAT), params=params).json()
+    temp = requests.get(url, auth=('', PAT), params=params)
+    print(temp)
+    return temp.json()
 
 def find_column_id(board_id, column_name):
     cols = azure_get(f"work/boards/{board_id}/columns", {"api-version":"6.0-preview.1"})["value"]
