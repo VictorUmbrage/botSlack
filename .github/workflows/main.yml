@@ -44,6 +44,9 @@ jobs:
           fi
 
       - name: Ensure secrets are present (fail fast)
+        env:
+          AZURE_PAT: ${{ secrets.AZURE_PAT }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         run: |
           [ -n "${AZURE_PAT}" ] || { echo "Missing AZURE_PAT"; exit 1; }
           [ -n "${SLACK_WEBHOOK}" ] || { echo "Missing SLACK_WEBHOOK"; exit 1; }
