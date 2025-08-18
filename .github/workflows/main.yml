@@ -45,8 +45,8 @@ jobs:
 
       - name: Ensure secrets are present (fail fast)
         run: |
-          [ -n "${secrets.AZURE_PAT}" ] || { echo "Missing AZURE_PAT"; exit 1; }
-          [ -n "${secrets.SLACK_WEBHOOK}" ] || { echo "Missing SLACK_WEBHOOK"; exit 1; }
+          [ -n "${AZURE_PAT}" ] || { echo "Missing AZURE_PAT"; exit 1; }
+          [ -n "${SLACK_WEBHOOK}" ] || { echo "Missing SLACK_WEBHOOK"; exit 1; }
 
       # Run your script with secrets injected as environment variables
       - name: Run monitor with secrets
