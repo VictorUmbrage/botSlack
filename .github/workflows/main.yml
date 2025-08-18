@@ -26,6 +26,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Debug: Show current dir and files
+        run: |
+          pwd
+          ls -alR
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
