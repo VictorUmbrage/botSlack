@@ -15,6 +15,16 @@ seen_ids = set()
 def azure_get(path, params=None):
     url = f"https://dev.azure.com/{AZURE_ORG}/{AZURE_PROJ}/_apis/{path}"
     temp = requests.get(url, auth=('', PAT), params=params)
+    print('Debugging')
+    print('response.status_code')   # 203
+    print(response.status_code)   # 203
+    print('response.text')          # Raw response body as text
+    print(response.text)          # Raw response body as text
+    print('response.json()')        # If it’s JSON data
+    print(response.json())        # If it’s JSON data
+    print('response.headers')       # Response headers
+    print(response.headers)       # Response headers
+    print('temp')
     print(temp)
     return temp.json()
 
