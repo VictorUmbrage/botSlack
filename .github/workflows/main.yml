@@ -3,9 +3,9 @@ name: Monitor during work hours
 
 on:
   schedule:
-    # Weekdays at 08:00 and 13:00 UTC == 09:00 and 14:00 Lisbon (DST)
     - cron: "0 8 * * 1-5"
     - cron: "0 13 * * 1-5"
+    - cron: "0 18 * * 1-5"
   workflow_dispatch:
 
 concurrency:
