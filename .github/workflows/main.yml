@@ -59,7 +59,7 @@ jobs:
         run: |
           set -e
           echo "Starting monitor for $RUN_FOR_MINUTES minutes..."
-          timeout "${RUN_FOR_MINUTES}m" python bot-get-tickets-qa.py || code=$?
+          timeout "${RUN_FOR_MINUTES}m" python bot-get-tickets-qa-v2.py || code=$?
           if [ "${code:-0}" = "124" ]; then
             echo "Time window reached; stopping gracefully."
             exit 0
